@@ -2,12 +2,16 @@ const httpStatus = require('http-status');
 const passport = require('passport');
 const User = require('../models/user.model');
 const APIError = require('../errors/api-error');
+const { jwt } = require('../../config/passport');
 
 const ADMIN = 'admin';
+const CREATOR = 'creator';
+const VERIFIER = 'verifier';
+const APPROVER = 'approver';
+const INTERN = 'intern';
 const LOGGED_USER = '_loggedUser';
 
 const handleJWT = (req, res, next, roles) => async (err, user, info) => {
-  console.log('handleJWT', err, user, info);
   const error = err || info;
   const logIn = Promise.promisify(req.logIn);
   const apiError = new APIError({
@@ -43,12 +47,12 @@ const handleJWT = (req, res, next, roles) => async (err, user, info) => {
 };
 
 exports.ADMIN = ADMIN;
+exports.CREATOR = CREATOR;
+exports.VERIFIER = VERIFIER;
+exports.APPROVER = APPROVER;
+exports.INTERN = INTERN;
 exports.LOGGED_USER = LOGGED_USER;
 
 exports.authorize = (roles = User.roles) => (req, res, next) => passport.authenticate(
-  'jwt', { session: false },
-  // console.log('authorize', roles),
-  handleJWT(req, res, next, roles),
+  jwt, { session: false }, handleJWT(req, res, next, roles),
 )(req, res, next);
-
-exports.oAuth = (service) => passport.authenticate(service, { session: false });

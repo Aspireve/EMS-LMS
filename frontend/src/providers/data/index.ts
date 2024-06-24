@@ -47,6 +47,9 @@ const generateQueryParams = (
       if (filter.operator === "eq") {
         query.append(filter.field, filter.value);
       }
+      else if (filter.operator === "contains") {
+        query.append(filter.field, filter.value);
+      }
     });
   }
 
@@ -55,17 +58,21 @@ const generateQueryParams = (
 
 export const dataProvider: DataProvider = {
   getList: async ({ resource, pagination, filters, sort }) => {
+    console.log(filters)
     const queryParams = generateQueryParams(pagination, filters, sort);
+    console.log("query", queryParams)
     const endpoint = `/${resource}?${queryParams}`;
     const response = await client.get(endpoint);
     const data = await response.json();
+    console.log("data", data)
     return {
       data,
       total: parseInt(response.headers.get("X-Total-Count") || "0", 10),
     };
   },
   getOne: async ({ resource, id }: GetOneParams) => {
-    const endpoint = `/${resource}/${id}`;
+    console.log(resource)
+    const endpoint = (id !== undefined) ? `/${resource}/${id}` : `/${resource}`;
     const response = await client.get(endpoint);
     const data = response.json();
     return data;

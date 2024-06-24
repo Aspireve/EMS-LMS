@@ -90,6 +90,10 @@ export const authProvider: AuthProvider = {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      // return {
+      //   authenticated: !!accessToken,
+      //   redirectTo: "/",
+      // };
       return {
         authenticated: true,
         redirectTo: "/",
@@ -111,7 +115,7 @@ export const authProvider: AuthProvider = {
         },
       });
       const data = await response.json();
-      return data;
+      return {...data};
     } catch (error) {
       return undefined;
     }

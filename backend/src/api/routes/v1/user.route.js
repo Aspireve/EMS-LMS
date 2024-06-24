@@ -1,7 +1,13 @@
 const express = require('express');
 const validate = require('express-validation');
 const controller = require('../../controllers/user.controller');
-const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
+const {
+  authorize,
+  ADMIN,
+  LOGGED_USER,
+  APPROVER,
+  VERIFIER,
+} = require('../../middlewares/auth');
 const {
   listUsers,
   createUser,
@@ -24,7 +30,7 @@ router
    * @apiVersion 1.0.0
    * @apiName ListUsers
    * @apiGroup User
-   * @apiPermission admin
+   * @apiPermission admin, approver, verifier
    *
    * @apiHeader {String} Authorization   User's access token
    *
@@ -39,7 +45,7 @@ router
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated users can access the data
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
-  .get(authorize(ADMIN), validate(listUsers), controller.list)
+  .get(authorize([ADMIN, APPROVER, VERIFIER]), validate(listUsers), controller.list)
   /**
    * @api {post} v1/users Create User
    * @apiDescription Create a new user

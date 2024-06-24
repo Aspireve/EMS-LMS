@@ -1,32 +1,82 @@
-import { DndContext } from "@dnd-kit/core";
-import React from "react";
+import { useState } from 'react';
+import Column from './column';
+import BurnBarrel from './burnbarrel';
 
-export const KanbanBoardContainer = ({ children }: React.PropsWithChildren) => {
+type ColumnType = "backlog" | "todo" | "doing" | "done";
+
+type CardType = {
+    title: string;
+    id: string;
+    column: ColumnType;
+  };
+
+type BoardProps = {
+    kanbanCards: CardType[]
+};
+
+
+const Board = ({kanbanCards}: BoardProps) => {
+  const [cards, setCards] = useState(kanbanCards);
+
   return (
     <div
       style={{
-        width: "calc(100% + 64px)",
-        height: "calc(100% - 64px)",
-        display: "flex",
-        justifyContent: "column",
-        margin: "-32px",
+        display: 'flex',
+        height: '80vh',
+        width: '100%',
+        gap: '0.75rem',
+        overflow: 'scroll',
+        padding: '0',
       }}
     >
-      <div
+      <Column
+        title="Backlog"
+        column="backlog"
+        headingColor="#800517"
+        cards={cards}
+        setCards={setCards}
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          padding: "32px",
-          overflow: "scroll",
+          flex: '1 1 0',
         }}
-      >
-        {children}
-      </div>
+      />
+      <Column
+        title="TODO"
+        column="todo"
+        headingColor="#FF6E00"
+        cards={cards}
+        setCards={setCards}
+        style={{
+          flex: '1 1 0',
+        }}
+      />
+      <Column
+        title="In progress"
+        column="doing"
+        headingColor="#002D62"
+        cards={cards}
+        setCards={setCards}
+        style={{
+          flex: '1 1 0',
+        }}
+      />
+      <Column
+        title="Complete"
+        column="done"
+        headingColor="#10B981"
+        cards={cards}
+        setCards={setCards}
+        style={{
+          flex: '1 1 0',
+        }}
+      />
+      <BurnBarrel
+        setCards={setCards}
+        style={{
+          flex: '0 1 auto',
+        }}
+      />
     </div>
   );
 };
 
-export const KanbanBoard = ({ children }: React.PropsWithChildren) => {
-  return <DndContext>{children}</DndContext>;
-};
+export default Board;

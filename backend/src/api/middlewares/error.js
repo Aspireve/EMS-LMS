@@ -19,8 +19,7 @@ const handler = (err, req, res, next) => {
     delete response.stack;
   }
 
-  res.status(err.status);
-  res.json(response);
+  return res.status(err.status).json(response);
 };
 exports.handler = handler;
 

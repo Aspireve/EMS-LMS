@@ -11,7 +11,7 @@ const { env, jwtSecret, jwtExpirationInterval } = require('../../config/vars');
 /**
 * User Roles
 */
-const roles = ['user', 'admin'];
+const roles = ['user', 'intern', 'creator', 'approver', 'verifier', 'admin'];
 
 /**
  * User Schema
@@ -39,18 +39,18 @@ const userSchema = new mongoose.Schema({
     index: true,
     trim: true,
   },
-  services: {
-    facebook: String,
-    google: String,
-  },
   role: {
     type: String,
     enum: roles,
     default: 'user',
   },
-  picture: {
+  avatar: {
     type: String,
     trim: true,
+  },
+  verified: {
+    type: Boolean,
+    default: false,
   },
 }, {
   timestamps: true,
@@ -83,7 +83,7 @@ userSchema.pre('save', async function save(next) {
 userSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'name', 'email', 'picture', 'role', 'createdAt'];
+    const fields = ['id', 'name', 'email', 'avatar', 'role', 'createdAt'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -143,9 +143,9 @@ userSchema.statics = {
    */
   async findAndGenerateToken(options) {
     const { email, password, refreshObject } = options;
-    if (!email) throw new APIError({ message: 'An email is required to generate a token' });
+    if (!email) throw new APIError({ message: 'An email or username is required to generate a token' });
 
-    const user = await this.findOne({ email }).exec();
+    const user = await this.findOne({ $or: [{ email }, { name: email }] }).exec();
     const err = {
       status: httpStatus.UNAUTHORIZED,
       isPublic: true,

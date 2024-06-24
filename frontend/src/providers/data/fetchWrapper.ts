@@ -20,6 +20,7 @@ const customFetch = async (url: string, options: RequestInit): Promise<Response>
 
 export const fetchWrapper = async (url: string, options: RequestInit = {}): Promise<Response> => {
     const response = await customFetch(url, options);
+    console.log(response)
     if(!response.ok) {
         const error = await getRestErrors(response)
         throw error

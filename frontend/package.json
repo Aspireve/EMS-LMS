@@ -16,8 +16,10 @@
     "@uiw/react-md-editor": "^3.19.5",
     "antd": "^5.0.5",
     "axios": "^1.7.2",
+    "framer-motion": "^11.2.11",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-icons": "^5.2.1",
     "react-router-dom": "^6.8.1"
   },
   "devDependencies": {

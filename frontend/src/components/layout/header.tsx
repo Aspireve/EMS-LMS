@@ -1,8 +1,6 @@
 import { Button, Layout, Space, Tooltip } from "antd";
 import {
   BellOutlined,
-  PoweroffOutlined,
-  RetweetOutlined,
 } from "@ant-design/icons";
 import { CSSProperties } from "react";
 import { CurrentUser } from "./currentUser";
@@ -43,22 +41,6 @@ const Header = () => {
           />
         </Tooltip>
         <CurrentUser />
-        <Tooltip title="logout">
-          <Button
-            shape="circle"
-            style={{ backgroundColor: "#e8ecf1" }}
-            size="middle"
-            icon={<RetweetOutlined style={{ color: "#4c96d9" }} />}
-          />
-        </Tooltip>
-        <Tooltip title="logout">
-          <Button
-            shape="circle"
-            style={{ backgroundColor: "#e8ecf1" }}
-            size="middle"
-            icon={<PoweroffOutlined style={{ color: "#e45c6c" }} />}
-          />
-        </Tooltip>
       </Space>
     </Layout.Header>
   );

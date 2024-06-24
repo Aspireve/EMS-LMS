@@ -1,12 +1,19 @@
-import { Avatar } from "antd";
-import React, { memo } from "react";
-import { getRandomColorFromString, getNameInitials } from "../../utilities";
+import React from "react";
 
-export const CustomAvatarComponent = ({ name = "", style, ...rest }) => {
+import type { AvatarProps } from "antd";
+import { Avatar as AntdAvatar } from "antd";
+
+import { getNameInitials, getRandomColorFromString } from "../../utilities";
+
+type Props = AvatarProps & {
+  name?: string;
+};
+
+const CustomAvatarComponent = ({ name = "", style, ...rest }: Props) => {
   return (
-    <Avatar
+    <AntdAvatar
       alt={name}
-      size="size"
+      size="small"
       style={{
         backgroundColor: rest?.src
           ? "transparent"
@@ -19,13 +26,13 @@ export const CustomAvatarComponent = ({ name = "", style, ...rest }) => {
       {...rest}
     >
       {getNameInitials(name)}
-    </Avatar>
+    </AntdAvatar>
   );
 };
 
-export const CustomAvatar = memo(
-    CustomAvatarComponent,
-    (prevProps, nextProps) => {
-        return prevProps.name === nextProps.name && prevProps.src === nextProps.src;
-    }
-)
+export const CustomAvatar = React.memo(
+  CustomAvatarComponent,
+  (prevProps, nextProps) => {
+    return prevProps.name === nextProps.name && prevProps.src === nextProps.src;
+  },
+);
