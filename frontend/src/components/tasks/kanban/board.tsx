@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Column from './column';
-import BurnBarrel from './burnbarrel';
 
 type ColumnType = "backlog" | "todo" | "doing" | "done";
 
@@ -22,58 +21,43 @@ const Board = ({kanbanCards}: BoardProps) => {
     <div
       style={{
         display: 'flex',
-        height: '80vh',
         width: '100%',
-        gap: '0.75rem',
-        overflow: 'scroll',
-        padding: '0',
+        gap: '2rem',
+        padding: '2rem 0',
+        overflowX: "scroll"
       }}
     >
       <Column
-        title="Backlog"
+        title="Backlog Tasks"
         column="backlog"
-        headingColor="#800517"
+        numberColor='#d5a540'
         cards={cards}
+        backgroundColor="#f6f0e1"
         setCards={setCards}
-        style={{
-          flex: '1 1 0',
-        }}
       />
       <Column
-        title="TODO"
+        title="Todo Tasks"
         column="todo"
-        headingColor="#FF6E00"
+        backgroundColor='#f6e6f0'
+        numberColor='#e04d8f'
         cards={cards}
         setCards={setCards}
-        style={{
-          flex: '1 1 0',
-        }}
       />
       <Column
-        title="In progress"
+        title="In Process"
         column="doing"
-        headingColor="#002D62"
+        backgroundColor='#efe8fa'
+        numberColor='#a55aed'
         cards={cards}
         setCards={setCards}
-        style={{
-          flex: '1 1 0',
-        }}
       />
       <Column
-        title="Complete"
+        title="Done"
         column="done"
-        headingColor="#10B981"
+        backgroundColor="#e1f3e9"
+        numberColor='#67bf84'
         cards={cards}
         setCards={setCards}
-        style={{
-          flex: '1 1 0',
-        }}
-      />
-      <BurnBarrel
-        setCards={setCards}
-        style={{
-          flex: '0 1 auto',
-        }}
       />
     </div>
   );

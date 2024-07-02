@@ -4,7 +4,7 @@ import {
     Dispatch,
     SetStateAction,
   } from "react";
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusCircleFilled, PlusOutlined } from '@ant-design/icons';
 
 type ColumnType = "backlog" | "todo" | "doing" | "done";
 
@@ -116,29 +116,29 @@ const AddCard = ({ column, setCards }: AddCardProps) => {
             display: 'flex',
             width: '100%',
             alignItems: 'center',
+            justifyContent: "center",
             gap: '0.375rem',
             padding: '0.375rem 0.75rem',
             fontSize: '0.75rem',
             color: '#000',
             fontWeight: "700",
             transition: 'background-color 0.2s',
+            backgroundColor: "white",
             cursor: 'pointer',
             borderRadius: '0.375rem',
-            border: "2px solid",
-            borderColor: "#007FFF",
-            boxShadow: "0 2px 2px #00000022"
+            boxShadow: "0 2px 2px #00000022",
+            border: "none"
           }}
           onMouseEnter={(e) => {
             const target = e.target as HTMLElement;
-            target.style.backgroundColor = '#007FFF';
+            // target.style.backgroundColor = '#007FFF';
           }}
           onMouseLeave={(e) => {
             const target = e.target as HTMLElement;
-            target.style.backgroundColor = 'transparent';
+            // target.style.backgroundColor = 'transparent';
           }}
         >
-          <span>Add card</span>
-          <PlusOutlined />
+          <PlusCircleFilled style={{color: "#aaa", fontSize: "1.2rem"}} />
         </motion.button>
       )}
     </>

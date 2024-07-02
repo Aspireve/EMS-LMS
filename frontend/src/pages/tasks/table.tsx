@@ -1,4 +1,8 @@
+import LatestUpdates from "../../components/tasks/table/latestupdates";
+import Leaderboard from "../../components/tasks/table/leaderboard";
 import TableDisplay from "../../components/tasks/table/table";
+import TaskDistribution from "../../components/tasks/table/taskdistribution";
+import TaskRemaining from "../../components/tasks/table/taskremaining";
 
 const Table = () => {
   const DEFAULT_CARDS = [
@@ -31,7 +35,19 @@ const Table = () => {
     },
   ];
 
-  return <TableDisplay data={DEFAULT_CARDS} />;
+  return (
+    <div style={{display: "flex", gap: "1.5rem"}}>
+      <div style={{width: "70%"}}>
+        <div style={{ display: "flex", gap: "1.5rem" }}>
+          <TaskRemaining />
+          <TaskDistribution />
+          <Leaderboard />
+        </div>
+        <TableDisplay data={DEFAULT_CARDS} />
+      </div>
+      <LatestUpdates />
+    </div>
+  );
 };
 
 export default Table;

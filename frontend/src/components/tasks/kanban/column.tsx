@@ -13,17 +13,19 @@ type CardType = {
 
 type ColumnProps = {
     title: string;
-    headingColor: string;
     cards: CardType[];
     column: ColumnType;
     setCards: Dispatch<SetStateAction<CardType[]>>;
     style: CSSProperties;
+    backgroundColor: string;
+    numberColor: string;
   };
 
 const Column = ({
   title,
-  headingColor,
+  numberColor,
   cards,
+  backgroundColor,
   column,
   setCards,
   style
@@ -57,6 +59,7 @@ const Column = ({
       const moveToBack = before === "-1";
 
       if (moveToBack) {
+        console.log(cardToTransfer)
         copy.push(cardToTransfer);
       } else {
         const insertAtIndex = copy.findIndex((el) => el.id === before);
@@ -134,10 +137,10 @@ const Column = ({
   const filteredCards = cards.filter((c) => c.column === column);
 
   return (
-    <div style={{ width: '14rem', flexShrink: 0, ...style }}>
-      <div style={{ marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: "2rem" }}>
-        <h3 style={{padding: 0, margin: 0}}>{title}</h3>
-        <span style={{ fontSize: '0.875rem', backgroundColor: headingColor, height: "2rem", width: "2rem", display:"flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: "600", borderRadius: "50%" }}>
+    <div style={{ ...style, minWidth: "25%" }}>
+      <div style={{ marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: "1rem" }}>
+        <h3 style={{padding: 0, margin: 0, fontWeight: "700", fontSize: "1.2rem"}}>{title}</h3>
+        <span style={{ fontSize: '0.875rem', backgroundColor: backgroundColor, height: "2rem", width: "2rem", display:"flex", alignItems: "center", justifyContent: "center", color: numberColor, fontWeight: "600", borderRadius: "50%" }}>
           {filteredCards.length}
         </span>
       </div>
@@ -146,10 +149,9 @@ const Column = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         style={{
-          height: '100%',
           width: '100%',
           transition: 'background-color 0.2s',
-          backgroundColor: active ? 'rgba(31, 41, 55, 0.5)' : 'rgba(31, 41, 55, 0)'
+          backgroundColor: active ? '#B0C4DE55' : 'rgba(31, 41, 55, 0)',
         }}
       >
         {filteredCards.map((c) => {
