@@ -23,7 +23,7 @@ exports.getCourse = async (req, res, next) => {
 exports.updateCourse = async (req, res, next) => {
   try {
     console.log(req.params);
-    console.log(req.body)
+    console.log(req.body);
     const { courseId } = req.params;
     const course = await Course.findByIdAndUpdate(courseId, { $set: req.body }, { new: true });
     return res.json(course);

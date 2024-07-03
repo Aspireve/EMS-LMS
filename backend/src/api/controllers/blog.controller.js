@@ -83,18 +83,20 @@ exports.updateBlog = async (req, res, next) => {
   try {
     const { id } = req.query;
     console.log(id);
-    const { title, author, poster, tags, content } = req.body;
+    const {
+      title, author, poster, tags, content,
+    } = req.body;
     const contentId = await Promise.all(
       content.map(async (blogContent) => {
         console.log(blogContent);
         const updatedContent = await ContentModel.findByIdAndUpdate(
           blogContent._id,
           blogContent,
-          { new: true }
+          { new: true },
         );
         console.log(updatedContent);
         return updatedContent._id;
-      })
+      }),
     );
     const blog = await BlogModel.findByIdAndUpdate(
       id,
@@ -105,7 +107,7 @@ exports.updateBlog = async (req, res, next) => {
         tags,
         content: contentId,
       },
-      { new: true }
+      { new: true },
     )
       .populate('content')
       .populate('author');
